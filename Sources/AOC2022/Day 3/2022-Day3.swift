@@ -7,21 +7,32 @@
 //
 
 class Day3: Day {
-    
-    static var rawInput: String? { nil }
+  let c = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".map { $0 }
+  func part1() async throws -> Int {
+    let s = input().lines.characters.map { chars in
+      let m = chars.count / 2
+      let t = Set(chars[..<m]).intersection(Set(chars[m...])).first!
+      return c.firstIndex(of: t)!
+    }.sum
 
-    func part1() async throws -> String {
-        return #function
-    }
+    return s
+  }
 
-    func part2() async throws -> String {
-        return #function
-    }
+  func part2() async throws -> Int {
+    return input().lines.chunks(ofCount: 3)
+      .map { lines in
+        lines.map { Set($0.characters) }
+          .reduce(Set()) { partialResult, s in
+            if partialResult.isEmpty {return s}
+            return partialResult.intersection(s)
+          }.first!
+      }
+      .map { c.firstIndex(of: $0)! }.sum
+  }
 
-    func run() async throws -> (String, String) {
-        let p1 = try await part1()
-        let p2 = try await part2()
-        return (p1, p2)
-    }
-
+  func run() async throws -> (Int, Int) {
+    let p1 = try await part1()
+    let p2 = try await part2()
+    return (p1, p2)
+  }
 }
