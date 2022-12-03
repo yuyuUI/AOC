@@ -12,7 +12,7 @@ class Day3: Day {
     let s = input().lines.characters.map { chars in
       let m = chars.count / 2
       let t = Set(chars[..<m]).intersection(Set(chars[m...])).first!
-      return c.firstIndex(of: t)!
+      return t.alphabetIndex! + (t.isUppercase ? 26 : 0)
     }.sum
 
     return s
@@ -23,11 +23,14 @@ class Day3: Day {
       .map { lines in
         lines.map { Set($0.characters) }
           .reduce(Set()) { partialResult, s in
-            if partialResult.isEmpty {return s}
+            if partialResult.isEmpty { return s }
             return partialResult.intersection(s)
           }.first!
       }
-      .map { c.firstIndex(of: $0)! }.sum
+      .map { t in 
+        t.alphabetIndex! + (t.isUppercase ? 26 : 0)
+      }
+      .sum
   }
 
   func run() async throws -> (Int, Int) {

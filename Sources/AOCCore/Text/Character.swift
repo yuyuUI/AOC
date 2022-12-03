@@ -9,26 +9,29 @@
 import Foundation
 
 public extension Character {
+  static let alphabet = Array("abcdefghijklmnopqrstuvwxyz")
     
-    static let alphabet = Array("abcdefghijklmnopqrstuvwxyz")
+  init?(ascii: Int) {
+    guard let scalar = Unicode.Scalar(ascii) else { return nil }
+    self.init(scalar)
+  }
     
-    init?(ascii: Int) {
-        guard let scalar = Unicode.Scalar(ascii) else { return nil }
-        self.init(scalar)
-    }
+  var isWhitespaceOrNewline: Bool { isWhitespace || isNewline }
     
-    var isWhitespaceOrNewline: Bool { isWhitespace || isNewline }
+  var uppercased: Character {
+    return uppercased().first!
+  }
     
-    var uppercased: Character {
-        return uppercased().first!
-    }
+  var lowercased: Character {
+    return lowercased().first!
+  }
     
-    var lowercased: Character {
-        return lowercased().first!
-    }
+  var isUppercase: Bool {
+    return self.uppercased == self
+  }
     
-    var isUppercase: Bool {
-        return uppercased == self
-    }
-    
+  var alphabetIndex: Int? {
+    guard self.isASCII, self.isLetter else { return nil }
+    return self.lowercased.asciiValue.flatMap(Int.init).flatMap { $0 - 96 }
+  }
 }
