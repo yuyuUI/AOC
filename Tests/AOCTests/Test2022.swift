@@ -9,6 +9,7 @@
 @testable import AOC2022
 import XCTest
 
+@MainActor
 class Test2022: XCTestCase {
   func testDay1() async throws {
     let d = Day1()
@@ -39,8 +40,18 @@ class Test2022: XCTestCase {
     let d = Day4()
     let (p1, p2) = try await d.run()
 
-    XCTAssertEqual(p1, "")
-    XCTAssertEqual(p2, "")
+    XCTAssertEqual(p1, 431)
+    XCTAssertEqual(p2, 823)
+    XCTAssertEqual(intersect(2...4, 6...8), false)
+    XCTAssertEqual(intersect(2...3, 4...5), false)
+    XCTAssertEqual(intersect(5...7, 7...9), false)
+    XCTAssertEqual(intersect(2...8, 3...7), true)
+    XCTAssertEqual(intersect(6...6, 4...6), true)
+    XCTAssertEqual(intersect(2...6, 4...8), false)
+    XCTAssertEqual(intersect(1...2, 3...7), false)
+    XCTAssertEqual(intersect(1...2, 2...3), false)
+    XCTAssertEqual(intersect(1...1, 1...1), true)
+    XCTAssertEqual(intersect(1...2, 2...2), true)
   }
 
   func testDay5() async throws {
