@@ -30,9 +30,9 @@ class Test2022: XCTestCase {
     let d = Day3()
     let (p1, p2) = try await d.run()
     XCTAssertEqual(p1, 7674)
-//    XCTAssertEqual(p2, 2805)
-    XCTAssertEqual([[1],[2],[3]].intersection, [])
-    XCTAssertEqual([[1],[1,2],[3]].intersection, [1])
+    XCTAssertEqual(p2, 2805)
+    XCTAssertEqual([[1], [2], [3]].intersection, [])
+    XCTAssertEqual([[1], [1, 2], [1, 3]].intersection, [1])
   }
 
   func testDay4() async throws {
@@ -209,5 +209,23 @@ class Test2022: XCTestCase {
 
     XCTAssertEqual(p1, "")
     XCTAssertEqual(p2, "")
+  }
+
+  // MARK: - PoC
+
+  func testIntersection() throws {
+    let lines = [
+      "NsgwPPDgsPHqsTqqmLbLrDRhmrRVrbVW",
+      "lFpGFtfFlvSFplGFzptSGSSlhZbhjhfrmWbhLhmLbCZVZjWr",
+      "ccplJQSGcSSpVFvNqqsqPNqPQPTwqd",
+    ].map { $0.map { $0 }}
+    XCTAssertEqual(
+      lines.intersectingElements(),
+      ["V", "q", "N", "P", "s", "T", "w"]
+    )
+    XCTAssertEqual(
+      lines.intersection,
+      ["V"]
+    )
   }
 }

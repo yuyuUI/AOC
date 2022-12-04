@@ -20,7 +20,7 @@ class Day6: Day {
     func part2() async throws -> String {
         let groups = input().raw
             .split(on: "\n\n")
-            .map { $0.split(on: \.isNewline).intersectingElements() }
+            .map { $0.split(on: \.isNewline).intersection }
         
         let total = groups.sum(of: \.count)
         return "\(total)"

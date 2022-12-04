@@ -7,7 +7,14 @@
 //
 
 class Day3: Day {
-  let c = " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".map { $0 }
+//  static var rawInput: String? {
+//    """
+//    vJrwpWtwJgWrhcsFMMfFFhFp
+//    jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+//    PmmdzqPrVvPwwTWBwg
+//    """
+//  }
+
   func part1() async throws -> Int {
     let s = input().lines.characters.map { chars in
       let m = chars.count / 2
@@ -19,19 +26,11 @@ class Day3: Day {
   }
 
   func part2() async throws -> Int {
-    let groups = input().lines.raw.chunks(ofCount: 3)
-    return 0
-//      groups.map { lines in
-//        var lines = lines.map { Set($0.characters) }
-//        let x = Set(lines.dropFirst())
-//        return lines.reduce(x) { partialResult, s in
-//          partialResult.intersection(s)
-//        }.first!
-//      }
-//      .map { t in
-//        t.alphabetIndex! + (t.isUppercase ? 26 : 0)
-//      }
-//      .sum
+    input().lines.characters.chunks(ofCount: 3).map { lines in
+      lines.intersection.first!
+    }.map { c in
+      c.alphabetIndex! + (c.isUppercase ? 26 : 0)
+    }.sum
   }
 
   func run() async throws -> (Int, Int) {

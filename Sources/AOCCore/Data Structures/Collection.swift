@@ -329,8 +329,14 @@ public extension Collection where Element: Hashable {
     }
 }
 public extension Collection where Element: Collection, Element.Element:Hashable {
-  var intersection:[Element] {
+  var intersection:Set<Element.Element> {
+    if isEmpty {return []}
+    var set = Set(first!)
     
+    for element in self.dropFirst() {
+      set.formIntersection(Set(element))
+    }
+    return set
   }
 }
 
