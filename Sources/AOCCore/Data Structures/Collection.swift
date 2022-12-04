@@ -327,7 +327,11 @@ public extension Collection where Element: Hashable {
         }
         return final
     }
+}
+public extension Collection where Element: Collection, Element.Element:Hashable {
+  var intersection:[Element] {
     
+  }
 }
 
 public extension Collection where Element: Collection {

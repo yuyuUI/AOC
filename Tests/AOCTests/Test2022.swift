@@ -30,9 +30,9 @@ class Test2022: XCTestCase {
     let d = Day3()
     let (p1, p2) = try await d.run()
     XCTAssertEqual(p1, 7674)
-    XCTAssertEqual(p2, 2805)
-    XCTAssertEqual(Character("a").asciiValue, 97)
-    XCTAssertEqual(Character("a").alphabetIndex, 1)
+//    XCTAssertEqual(p2, 2805)
+    XCTAssertEqual([[1],[2],[3]].intersection, [])
+    XCTAssertEqual([[1],[1,2],[3]].intersection, [1])
   }
 
   func testDay4() async throws {
