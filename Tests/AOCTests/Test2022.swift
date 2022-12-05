@@ -57,9 +57,9 @@ class Test2022: XCTestCase {
   func testDay5() async throws {
     let d = Day5()
     let (p1, p2) = try await d.run()
-
-    XCTAssertEqual(p1, "")
-    XCTAssertEqual(p2, "")
+    
+    XCTAssertEqual(p1, "JDTMRWCQJ")
+    XCTAssertEqual(p2, "VHJDDCWRD")
   }
 
   func testDay6() async throws {
