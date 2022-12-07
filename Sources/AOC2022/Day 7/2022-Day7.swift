@@ -35,13 +35,6 @@ class Day7: Day {
     """
   }
 
-  enum D {
-    case dir(String)
-    case fileSize(Int, String)
-    case ls
-    case cd(String)
-  }
-
   enum T {
     case file
     case dir
@@ -62,20 +55,27 @@ class Day7: Day {
     var child: [Node]
   }
 
+  enum SingleLine {
+    case dir(String)
+    case fileSize(Int, String)
+    case ls
+    case cd(String)
+  }
+
   let parser = {
-    let dir = Parse(D.dir) {
+    let dir = Parse(SingleLine.dir) {
       "dir "
       Prefix { $0 != "\n" }.map(String.init)
     }
-    let fileSize = Parse(D.fileSize) {
+    let fileSize = Parse(SingleLine.fileSize) {
       Int.parser()
       " "
       Prefix { $0 != "\n" }.map(String.init)
     }
-    let ls = Parse(D.ls) {
+    let ls = Parse(SingleLine.ls) {
       "$ ls"
     }
-    let cd = Parse(D.cd) {
+    let cd = Parse(SingleLine.cd) {
       "$ cd "
       Prefix { $0 != "\n" }.map(String.init)
     }
@@ -91,14 +91,13 @@ class Day7: Day {
       line
     } separator: {
       "\n"
-    }
-//  terminator: {
-//      End()
-//    }
+    } /* terminator: {
+       End()
+     } */
   }()
 
   func run() async throws -> (Int, Int) {
-    let lines: [Day7.D]
+    let lines: [Day7.SingleLine]
     do {
       lines = try parser.parse(input().raw)
     } catch {
