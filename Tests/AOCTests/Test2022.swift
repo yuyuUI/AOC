@@ -66,8 +66,8 @@ class Test2022: XCTestCase {
     let d = Day6()
     let (p1, p2) = try await d.run()
 
-    XCTAssertEqual(p1, "")
-    XCTAssertEqual(p2, "")
+    XCTAssertEqual(p1, 1987)
+    XCTAssertEqual(p2, 3059)
   }
 
   func testDay7() async throws {
@@ -238,5 +238,18 @@ class Test2022: XCTestCase {
       lines.intersection,
       ["V"]
     )
+  }
+  func testWindowIndex() throws {
+    let window = [1,2,3,4,5].windows(ofCount: 2)
+    XCTAssertEqual( window[vertical: 0].endIndex.hashValue, 1 )
+  }
+}
+
+import Algorithms
+extension WindowsOfCountCollection where Base.Index == Int {
+  func baseIndex(of index: Index) -> Base.Index {
+    let x = self[index]
+    dump(x)
+    return 0
   }
 }

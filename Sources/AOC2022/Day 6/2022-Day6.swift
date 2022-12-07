@@ -7,21 +7,43 @@
 //
 
 class Day6: Day {
-    
-    static var rawInput: String? { nil }
+  fileprivate func markIndex(_ distinctCharacters: Int) -> Int {
+    return input().lines.characters.map { chars in
+      var ptn = distinctCharacters
+      return (
+        chars.windows(ofCount: distinctCharacters)
+          .lazy.enumerated().first { i, chars in
+            Set(chars).count == distinctCharacters
+          }?.0 ?? 0
+      ) + distinctCharacters
+      for (i, w) in chars.windows(ofCount: distinctCharacters).enumerated() {
+        if Set(w).count == distinctCharacters {
+          print(w, i, i + distinctCharacters)
+          break
+        }
+      }
+      while ptn < chars.count {
+        if Set(chars[(ptn - distinctCharacters) ..< ptn]).count == distinctCharacters {
+          return ptn
+        }
+        ptn += 1
+      }
+      return 0
+    }.sum
+  }
 
-    func part1() async throws -> String {
-        return #function
-    }
+  func part1() async throws -> Int {
+    markIndex(4)
+  }
 
-    func part2() async throws -> String {
-        return #function
-    }
+  func part2() async throws -> Int {
+    markIndex(14)
+  }
 
-    func run() async throws -> (String, String) {
-        let p1 = try await part1()
-        let p2 = try await part2()
-        return (p1, p2)
-    }
-
+  func run() async throws -> (Int, Int) {
+    let p1 = try await part1()
+    let p2 = try await part2()
+    return (p1, p2)
+  }
 }
+
