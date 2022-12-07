@@ -4,10 +4,7 @@
 //
 //  Created by Dave DeLong on 10/12/22.
 //  Copyright © 2022 Dave DeLong. All rights reserved.
-//
-
 import Parsing
-
 class Day7: Day {
   static var rawInput: String? {
     return nil
@@ -68,35 +65,46 @@ class Day7: Day {
   let parser = {
     let dir = Parse(D.dir) {
       "dir "
-      Rest().map(String.init)
+      Prefix { $0 != "\n" }.map(String.init)
     }
     let fileSize = Parse(D.fileSize) {
       Int.parser()
       " "
-      Rest().map(String.init)
+      Prefix { $0 != "\n" }.map(String.init)
     }
-    let commandLs = Parse(D.ls) {
+    let ls = Parse(D.ls) {
       "$ ls"
     }
-    let commandcd = Parse(D.cd) {
+    let cd = Parse(D.cd) {
       "$ cd "
-      Rest().map(String.init)
+      Prefix { $0 != "\n" }.map(String.init)
     }
 
     let line = OneOf {
       dir
       fileSize
-      commandLs
-      commandcd
+      ls
+      cd
     }
-    return line
+
+    return Many {
+      line
+    } separator: {
+      "\n"
+    }
+//  terminator: {
+//      End()
+//    }
   }()
 
   func run() async throws -> (Int, Int) {
-    let lines = try input().lines.raw
-      .map {
-        try parser.parse($0)
-      }
+    let lines: [Day7.D]
+    do {
+      lines = try parser.parse(input().raw)
+    } catch {
+      print(error)
+      fatalError()
+    }
 
     let dummy = Node(name: "dummy", t: .dir, upper: nil, child: [])
     var node = dummy
