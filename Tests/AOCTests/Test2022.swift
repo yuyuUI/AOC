@@ -16,7 +16,7 @@ class Test2022: XCTestCase {
     let (p1, p2) = try await d.run()
 
     XCTAssertEqual(p1, 71471)
-    XCTAssertEqual(p2, 211189)
+    XCTAssertEqual(p2, 211_189)
   }
 
   func testDay2() async throws {
@@ -42,22 +42,22 @@ class Test2022: XCTestCase {
 
     XCTAssertEqual(p1, 431)
     XCTAssertEqual(p2, 823)
-    XCTAssertEqual(intersect(2...4, 6...8), false)
-    XCTAssertEqual(intersect(2...3, 4...5), false)
-    XCTAssertEqual(intersect(5...7, 7...9), false)
-    XCTAssertEqual(intersect(2...8, 3...7), true)
-    XCTAssertEqual(intersect(6...6, 4...6), true)
-    XCTAssertEqual(intersect(2...6, 4...8), false)
-    XCTAssertEqual(intersect(1...2, 3...7), false)
-    XCTAssertEqual(intersect(1...2, 2...3), false)
-    XCTAssertEqual(intersect(1...1, 1...1), true)
-    XCTAssertEqual(intersect(1...2, 2...2), true)
+    XCTAssertEqual(intersect(2 ... 4, 6 ... 8), false)
+    XCTAssertEqual(intersect(2 ... 3, 4 ... 5), false)
+    XCTAssertEqual(intersect(5 ... 7, 7 ... 9), false)
+    XCTAssertEqual(intersect(2 ... 8, 3 ... 7), true)
+    XCTAssertEqual(intersect(6 ... 6, 4 ... 6), true)
+    XCTAssertEqual(intersect(2 ... 6, 4 ... 8), false)
+    XCTAssertEqual(intersect(1 ... 2, 3 ... 7), false)
+    XCTAssertEqual(intersect(1 ... 2, 2 ... 3), false)
+    XCTAssertEqual(intersect(1 ... 1, 1 ... 1), true)
+    XCTAssertEqual(intersect(1 ... 2, 2 ... 2), true)
   }
 
   func testDay5() async throws {
     let d = Day5()
     let (p1, p2) = try await d.run()
-    
+
     XCTAssertEqual(p1, "JDTMRWCQJ")
     XCTAssertEqual(p2, "VHJDDCWRD")
   }
@@ -74,8 +74,8 @@ class Test2022: XCTestCase {
     let d = Day7()
     let (p1, p2) = try await d.run()
 
-        XCTAssertEqual(p1, 1989474)
-    XCTAssertEqual(p2, 1111607)
+    XCTAssertEqual(p1, 1_989_474)
+    XCTAssertEqual(p2, 1_111_607)
 //    XCTAssertEqual(p1, 95437)
 //    XCTAssertEqual(p2, 24933642)
   }
@@ -84,8 +84,10 @@ class Test2022: XCTestCase {
     let d = Day8()
     let (p1, p2) = try await d.run()
 
-    XCTAssertEqual(p1, "")
-    XCTAssertEqual(p2, "")
+//    XCTAssertEqual(p1, 21)
+        XCTAssertEqual(p1, 1693)
+    XCTAssertEqual(p2, 422059)
+//    XCTAssertEqual(p2, 8)
   }
 
   func testDay9() async throws {
