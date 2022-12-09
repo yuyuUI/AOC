@@ -6,6 +6,10 @@
 //  Copyright © 2022 Dave DeLong. All rights reserved.
 //
 
+struct P: Hashable {
+  var x, y: Int
+}
+
 class Day8: Day {
   static var rawInput: String? {
     return nil
@@ -30,9 +34,6 @@ class Day8: Day {
     case canNot = "X"
   }
 
-  struct P: Hashable {
-    var x, y: Int
-  }
 
   lazy var rows: [[Int]] =
     input().lines.characters.map { row in
