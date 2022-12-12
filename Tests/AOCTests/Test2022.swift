@@ -7,6 +7,7 @@
 //
 
 @testable import AOC2022
+import Parsing
 import XCTest
 
 @MainActor
@@ -133,144 +134,215 @@ class Test2022: XCTestCase {
 
     XCTAssertEqual(p1, "")
     XCTAssertEqual(p2, "")
+  }
 
-    func testDay11() async throws {
-      let d = Day11()
-      let (p1, p2) = try await d.run()
+  func testDay11() async throws {
+    let d = Day11()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
+    XCTAssertEqual(p1, 10605)
+//    XCTAssertEqual(p2, 0)
+  }
+
+  func test() throws {
+    let monkeyRaw =
+      """
+      Monkey 0:
+        Starting items: 79, 98
+        Operation: new = old * 19
+        Test: divisible by 23
+          If true: throw to monkey 2
+          If false: throw to monkey 3
+      """
+
+   let parse = Parse {
+      Parse {
+        "Monkey "
+        Int.parser()
+        ":\n"
+      }
+      Parse {
+        "  Starting items: "
+        Many {
+          Int.parser()
+        } separator: {
+          ", "
+        } terminator: {
+          "\n"
+        }
+      }
+      Parse {
+        "  Operation: new = old "
+        OneOf {
+          Parse {
+            "+ "
+            Int.parser()
+          }.map{"+ \($0)"}
+          Parse {
+            "* "
+            Int.parser()
+          }.map{"* \($0)"}
+          Parse {
+            "* old"
+          }.map{"square"}
+        }
+      }
+      Parse {
+        "\n  Test: divisible by "
+        Int.parser()
+      }
+      Parse {
+        "\n    If true: throw to monkey "
+        Int.parser()
+      }
+      Parse {
+        "\n    If false: throw to monkey "
+        Int.parser()
+      }
     }
-
-    func testDay12() async throws {
-      let d = Day12()
-      let (p1, p2) = try await d.run()
-
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
+    do {
+      let monkey = try parse.parse(monkeyRaw)
+      dump(monkey)
+      let monkeys = try Many {
+        parse
+      } separator: {
+        "\n\n"
+      }.parse(Day11.rawInput!)
+      dump(monkeys)
     }
-
-    func testDay13() async throws {
-      let d = Day13()
-      let (p1, p2) = try await d.run()
-
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
+    catch {
+      print(error)
     }
+  }
 
-    func testDay14() async throws {
-      let d = Day14()
-      let (p1, p2) = try await d.run()
+  func testDay12() async throws {
+    let d = Day12()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
 
-    func testDay15() async throws {
-      let d = Day15()
-      let (p1, p2) = try await d.run()
+  func testDay13() async throws {
+    let d = Day13()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
 
-    func testDay16() async throws {
-      let d = Day16()
-      let (p1, p2) = try await d.run()
+  func testDay14() async throws {
+    let d = Day14()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
 
-    func testDay17() async throws {
-      let d = Day17()
-      let (p1, p2) = try await d.run()
+  func testDay15() async throws {
+    let d = Day15()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
 
-    func testDay18() async throws {
-      let d = Day18()
-      let (p1, p2) = try await d.run()
+  func testDay16() async throws {
+    let d = Day16()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
 
-    func testDay19() async throws {
-      let d = Day19()
-      let (p1, p2) = try await d.run()
+  func testDay17() async throws {
+    let d = Day17()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
 
-    func testDay20() async throws {
-      let d = Day20()
-      let (p1, p2) = try await d.run()
+  func testDay18() async throws {
+    let d = Day18()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
 
-    func testDay21() async throws {
-      let d = Day21()
-      let (p1, p2) = try await d.run()
+  func testDay19() async throws {
+    let d = Day19()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
 
-    func testDay22() async throws {
-      let d = Day22()
-      let (p1, p2) = try await d.run()
+  func testDay20() async throws {
+    let d = Day20()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
 
-    func testDay23() async throws {
-      let d = Day23()
-      let (p1, p2) = try await d.run()
+  func testDay21() async throws {
+    let d = Day21()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
 
-    func testDay24() async throws {
-      let d = Day24()
-      let (p1, p2) = try await d.run()
+  func testDay22() async throws {
+    let d = Day22()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
 
-    func testDay25() async throws {
-      let d = Day25()
-      let (p1, p2) = try await d.run()
+  func testDay23() async throws {
+    let d = Day23()
+    let (p1, p2) = try await d.run()
 
-      XCTAssertEqual(p1, "")
-      XCTAssertEqual(p2, "")
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
 
-    // MARK: - PoC
+  func testDay24() async throws {
+    let d = Day24()
+    let (p1, p2) = try await d.run()
 
-    func testIntersection() throws {
-      let lines = [
-        "NsgwPPDgsPHqsTqqmLbLrDRhmrRVrbVW",
-        "lFpGFtfFlvSFplGFzptSGSSlhZbhjhfrmWbhLhmLbCZVZjWr",
-        "ccplJQSGcSSpVFvNqqsqPNqPQPTwqd",
-      ].map { $0.map { $0 }}
-      XCTAssertEqual(
-        lines.intersectingElements(),
-        ["V", "q", "N", "P", "s", "T", "w"]
-      )
-      XCTAssertEqual(
-        lines.intersection,
-        ["V"]
-      )
-    }
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
+
+  func testDay25() async throws {
+    let d = Day25()
+    let (p1, p2) = try await d.run()
+
+    XCTAssertEqual(p1, "")
+    XCTAssertEqual(p2, "")
+  }
+
+  // MARK: - PoC
+
+  func testIntersection() throws {
+    let lines = [
+      "NsgwPPDgsPHqsTqqmLbLrDRhmrRVrbVW",
+      "lFpGFtfFlvSFplGFzptSGSSlhZbhjhfrmWbhLhmLbCZVZjWr",
+      "ccplJQSGcSSpVFvNqqsqPNqPQPTwqd",
+    ].map { $0.map { $0 }}
+    XCTAssertEqual(
+      lines.intersectingElements(),
+      ["V", "q", "N", "P", "s", "T", "w"]
+    )
+    XCTAssertEqual(
+      lines.intersection,
+      ["V"]
+    )
   }
 }
 
