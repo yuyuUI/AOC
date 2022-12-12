@@ -6,8 +6,9 @@
 //  Copyright © 2022 Dave DeLong. All rights reserved.
 //
 
-struct P: Hashable {
+struct P: Hashable, CustomStringConvertible {
   var x, y: Int
+  var description: String {"(\(x),\(y))"}
 }
 
 class Day8: Day {
