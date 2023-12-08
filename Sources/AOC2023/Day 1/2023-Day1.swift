@@ -8,12 +8,14 @@
 
 class Day1: Day {
   static var rawInput: String? {
-    return nil
     """
-    1abc2
-    pqr3stu8vwx
-    a1b2c3d4e5f
-    treb7uchet
+    two1nine
+    eightwothree
+    abcone2threexyz
+    xtwone3four
+    4nineeightseven2
+    zoneight234
+    7pqrstsixteen
     """
   }
 
@@ -25,7 +27,10 @@ class Day1: Day {
           .map { Int(String($0))! }
       }
       .map{ ints  in
-        ints.first! * 10 + ints.last!
+        guard let f = ints.first, let l = ints.last else {
+          return 0
+        }
+       return f * 10 + l
       }
       .sum
       .description
