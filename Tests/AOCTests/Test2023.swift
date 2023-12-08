@@ -15,7 +15,7 @@ class Test2023: XCTestCase {
         let d = Day1()
         let (p1, p2) = try await d.run()
 
-        XCTAssertEqual(p1, "")
+        XCTAssertEqual(p1, "55002")
         XCTAssertEqual(p2, "")
     }
 
