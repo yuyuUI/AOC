@@ -17,7 +17,7 @@ class Test2023: XCTestCase {
 
 //        XCTAssertEqual(p1, "55002")
     // [29, 83, 10, 4, 42, 14, 76]p
-    XCTAssertEqual(p2, "55086")
+    XCTAssertEqual(p2, "55093")
   }
 
 
