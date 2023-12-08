@@ -41,7 +41,7 @@ class Day7: Day {
   }
 
   class Node {
-    internal init(name: String, t: T, upper: Node?, child: [Node]) {
+    init(name: String, t: T, upper: Node?, child: [Node]) {
       self.name = name
       self.t = t
       self.upper = upper
@@ -67,7 +67,7 @@ class Day7: Day {
       "dir "
       Prefix { $0 != "\n" }.map(String.init)
     }
-    let fileSize = Parse(SingleLine.fileSize) {
+    let fileSize = Parse(input: Substring.self, SingleLine.fileSize) {
       Int.parser()
       " "
       Prefix { $0 != "\n" }.map(String.init)
@@ -91,9 +91,9 @@ class Day7: Day {
       line
     } separator: {
       "\n"
-    } /* terminator: {
-       End()
-     } */
+    } // terminator: {
+    //  End()
+    // }
   }()
 
   func run() async throws -> (Int, Int) {
@@ -137,23 +137,21 @@ class Day7: Day {
       }
     }
     travel(dummy.child[0])
-    /*
-     - / (dir) 48381165
-       - a (dir) 94853
-         - e (dir) 584
-           - i (file, size=584)
-         - f (file, size=29116)
-         - g (file, size=2557)
-         - h.lst (file, size=62596)
-       - b.txt (file, size=14848514)
-       - c.dat (file, size=8504156)
-       - d (dir) 24933642
-         - j (file, size=4060174)
-         - d.log (file, size=8033020)
-         - d.ext (file, size=5626152)
-         - k (file, size=7214296)
-     70000000 - 48381165 = 21618835
-     */
+    // - / (dir) 48381165
+    //  - a (dir) 94853
+    //    - e (dir) 584
+    //      - i (file, size=584)
+    //    - f (file, size=29116)
+    //    - g (file, size=2557)
+    //    - h.lst (file, size=62596)
+    //  - b.txt (file, size=14848514)
+    //  - c.dat (file, size=8504156)
+    //  - d (dir) 24933642
+    //    - j (file, size=4060174)
+    //    - d.log (file, size=8033020)
+    //    - d.ext (file, size=5626152)
+    //    - k (file, size=7214296)
+    // 70000000 - 48381165 = 21618835
 
     let all = get(dummy.child[0])
     let p1 = all.map(\.0).filter { $0 <= 100_000 }.sum
