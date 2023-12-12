@@ -6,20 +6,18 @@
 //  Copyright © 2023 Dave DeLong. All rights reserved.
 //
 
+import CustomDump
 import XCTest
 @testable import AOC2023
-
 
 class Test2023: XCTestCase {
   func testDay1() async throws {
     let d = Day1()
     let (p1, p2) = try await d.run()
 
-//        XCTAssertEqual(p1, "55002")
-    // [29, 83, 13, 24, 42, 14, 76]
+    XCTAssertEqual(p1, "55002")
     XCTAssertEqual(p2, "55093")
   }
-
 
   func testDay2() async throws {
     let d = Day2()
