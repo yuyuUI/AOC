@@ -10,13 +10,7 @@ class Day1: Day {
   static var rawInput: String? {
     return nil
     """
-    two1nine
     eightwothree
-    abcone2threexyz
-    xtwone3four
-    4nineeightseven2
-    zoneight234
-    7pqrstsixteen
     """
   }
 
@@ -37,31 +31,81 @@ class Day1: Day {
       .description
   }
 
+  lazy var trie = buildTrie()
   func part2() async throws -> String {
-    let lines = input().lines
     var sum = 0
-    let trie = buildTrie()
+    let lines = input().lines.map(\.raw)
+
     for line in lines {
-      let line = line.raw
-      var p1 = line.startIndex
-      var p2 = line.startIndex
-      while p2 < line.endIndex {
-        let c = String(line[p2])
-        if trie.children[c] != nil {
-          p2 = line.index(after: p2)
-          continue
-        }
-        if let number = trie.children[String(line[p1])]?.number {
-          sum += Int(number)!
-          p1 = line.index(after: p2)
-          p2 = p1
-          continue
-        }
-        p1 = line.index(after: p1)
-        p2 = p1
-      }
+      let numbers = make(line)
+      print(numbers.joined())
+      sum += Int(numbers[0] + numbers.last!)!
     }
     return sum.description
+  }
+
+  func make(_ line:String) -> [String] {
+    let line = line.map { $0 }
+    var word = trie
+    var numbers: [String] = []
+    var p1 = 0
+    var p2 = 0
+    while p2 < line.count {
+      if line[p2].isNumber {
+        numbers.append(String(line[p2]))
+        p2 += 1
+        p1 = p2
+        word = trie
+      } else {
+//          print(line[p2])
+        if let child = word.children[String(line[p2])] {
+          word = child
+          if let number = word.number {
+            numbers.append(number)
+            word = trie.children[String(line[p2])] ?? trie
+            p1 = p2
+          }
+          p2 += 1
+
+        } else {
+          word = trie
+          p1 += 1
+          p2 = p1
+        }
+      }
+    }
+    return numbers
+  }
+  func _part2() async throws -> String {
+    input()
+      .lines
+      .map(\.raw)
+      .map(mapping)
+      .map {
+        line in
+        line.filter(\.isNumber)
+      }
+      .map { line in
+        Int(String(line.first!) + String(line.last!))!
+      }
+
+      .sum
+      .description
+  }
+
+  func mapping(_ string: String) -> String {
+    let list = ["😀", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
+    var string = string
+    var i = string.startIndex
+    while i != string.endIndex {
+      for (int, w) in list.enumerated() {
+        if string[i...].hasPrefix(w) {
+          string = string.replacingOccurrences(of: w, with: int.description)
+        }
+      }
+      i = string.index(after: i)
+    }
+    return string
   }
 
   func run() async throws -> (String, String) {
@@ -113,73 +157,71 @@ class Day1: Day {
   }
 }
 
-/*
- class Node:
-     def __init__(self, char) -> None:
-         self.char = char
-         self.children = {}
-         self.number = None
-
-     def __str__(self) -> str:
-         return f"Node(char={self.char},children={self.children.keys()},number={self.number})"
-
- def build_trie():
-     words = [
-         ['one','1'],
-         ['two','2'],
-         ['three','3'],
-         ['four','4'],
-         ['five','5'],
-         ['six','6'],
-         ['seven','7'],
-         ['eight','8'],
-         ['nine','9'],
-     ]
-     trie = Node("")
-
-     for (word,number) in words:
-         node = trie
-         for c in word:
-             if c not in node.children:
-                 node.children[c] = Node(c)
-             node = node.children[c]
-         node.number = number
-
-     return trie
-
- input = open("d01-input.txt")
- sum = 0
- trie = build_trie()
-
- for line in input:
-     word = trie
-     numbers = []
-     p1 = p2 = 0
-
-     while p2 < len(line):
-         if line[p2].isdigit():
-             numbers.append(line[p2])
-             p2 += 1
-             p1 = p2
-             word = trie
-
-         else:
-             if line[p2] in word.children:
-                 word = word.children[line[p2]]
-
-                 if word.number:
-                     numbers.append(word.number)
-                     p1 = p2
-                     word = trie.children.get(line[p2], trie)
-
-                 p2 += 1
-
-             else:
-                 word = trie
-                 p1 += 1
-                 p2 = p1
-
-     sum += int(numbers[0]+numbers[-1])
-
- print(sum)
- */
+// class Node:
+//    def __init__(self, char) -> None:
+//        self.char = char
+//        self.children = {}
+//        self.number = None
+//
+//    def __str__(self) -> str:
+//        return f"Node(char={self.char},children={self.children.keys()},number={self.number})"
+//
+// def build_trie():
+//    words = [
+//        ['one','1'],
+//        ['two','2'],
+//        ['three','3'],
+//        ['four','4'],
+//        ['five','5'],
+//        ['six','6'],
+//        ['seven','7'],
+//        ['eight','8'],
+//        ['nine','9'],
+//    ]
+//    trie = Node("")
+//
+//    for (word,number) in words:
+//        node = trie
+//        for c in word:
+//            if c not in node.children:
+//                node.children[c] = Node(c)
+//            node = node.children[c]
+//        node.number = number
+//
+//    return trie
+//
+// input = open("d01-input.txt")
+// sum = 0
+// trie = build_trie()
+//
+// for line in input:
+//    word = trie
+//    numbers = []
+//    p1 = p2 = 0
+//
+//    while p2 < len(line):
+//        if line[p2].isdigit():
+//            numbers.append(line[p2])
+//            p2 += 1
+//            p1 = p2
+//            word = trie
+//
+//        else:
+//            if line[p2] in word.children:
+//                word = word.children[line[p2]]
+//
+//                if word.number:
+//                    numbers.append(word.number)
+//                    p1 = p2
+//                    word = trie.children.get(line[p2], trie)
+//
+//                p2 += 1
+//
+//            else:
+//                word = trie
+//                p1 += 1
+//                p2 = p1
+//
+//    sum += int(numbers[0]+numbers[-1])
+//
+// print(sum)

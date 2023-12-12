@@ -16,7 +16,7 @@ class Test2023: XCTestCase {
     let (p1, p2) = try await d.run()
 
 //        XCTAssertEqual(p1, "55002")
-    // [29, 83, 10, 4, 42, 14, 76]p
+    // [29, 83, 13, 24, 42, 14, 76]
     XCTAssertEqual(p2, "55093")
   }
 
