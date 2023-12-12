@@ -91,7 +91,18 @@ class Day2: Day {
   }
 
   func part2() async throws -> String {
-    return #function
+    input()
+      .lines
+      .map { line in
+        try! parser.parse(line.raw)
+      }
+      .map(mapGame)
+      .map{c in
+        c.reduce(into: 1, *=)
+      }
+      .sum
+      .description
+
   }
 
   func run() async throws -> (String, String) {
@@ -109,5 +120,16 @@ class Day2: Day {
       }
     }
     return true
+  }
+
+  func mapGame(_ game: Game) -> [Int] {
+    var (r, g, b) = (0, 0, 0)
+
+    for round in game.rounds {
+      r = max(round.red, r)
+      g = max(round.green, g)
+      b = max(round.blue, b)
+    }
+    return [r, g, b]
   }
 }
